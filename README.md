@@ -86,7 +86,7 @@ to the viewer.
    these should just be the dimensions of your OBS canvas.
    - `Control audio...` should be **enabled**. This lets you independently control
    the volume of the replay and it shows up as a separate audio device in the
-   `Audio Mixer`
+   `Audio Mixer`.
    - `Shutdown source...` should be **disabled**. This messes with some internal
    stuff on the viewer's end.
    - `Refresh browser...` should be **enabled**. This way, every time you
