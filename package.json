@@ -1,12 +1,12 @@
 {
-  "name": "ffconcat-replay",
+  "name": "preyneyvs-replay-manager",
   "version": "0.1.0",
   "main": "main.js",
   "license": "MIT",
   "author": "Pranav Nutalapati <pranavnutalapati@gmail.com>",
   "scripts": {
     "start": "electron .",
-    "dist": "electron-packager ./ --out dist --overwrite --icon ./icon"
+    "dist": "electron-packager ./ --out dist --overwrite --icon ./icon --platform win32 --arch x64"
   },
   "dependencies": {
     "chokidar": "^3.5.1",
