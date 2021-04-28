@@ -7,14 +7,14 @@ function createWindow() {
         height: 600,
         webPreferences: {
             nodeIntegration: true,
-            enableRemoteModule: true
+            enableRemoteModule: true,
+            contextIsolation: false
         }
     })
 
     win.setMenuBarVisibility(false)
 
     void win.loadFile('src/index.html')
-    // win.webContents.openDevTools()
 }
 
 app.whenReady().then(createWindow)

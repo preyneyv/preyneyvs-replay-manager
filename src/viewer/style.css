@@ -1,0 +1,30 @@
+body {
+    margin: 0;
+}
+
+body.hide {
+    opacity: 0;
+}
+
+#video-container > video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: contain;
+    
+    z-index: 2;
+    opacity: 1;
+    transition: opacity 1s;
+}
+
+#video-container > video.hide {
+    opacity: 0;
+    z-index: 1;
+    transition: none;
+}
+
+#video-container > video.show {
+    z-index: 3;
+}

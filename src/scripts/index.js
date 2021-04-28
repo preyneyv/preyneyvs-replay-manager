@@ -1,14 +1,17 @@
+import { API } from "./api.js"
+
 const $ = require('jquery')
 const chokidar = require('chokidar')
 const fs = require('fs')
 const path = require('path')
 
 const $configDirectory = $("#configuration-directory"),
-    $configPlaylist = $("#configuration-playlist"),
+    $configPort = $("#configuration-port"),
     $configPattern = $("#configuration-pattern"),
-    $configDuration = $("#configuration-duration"),
     $configTags = $("#configuration-tags"),
     $hideAll = $("#hide-all"),
+    $showAll = $("#show-all"),
+    $copyURL = $("#copy-url"),
     $selectionStatus = $("#selection-status"),
     $clearSelection = $("#clear-selection"),
     $enqueueSelection = $("#enqueue-selection"),
@@ -18,17 +21,19 @@ const $configDirectory = $("#configuration-directory"),
 
 const config = localStorage.config ? JSON.parse(localStorage.config) : {
     directory: '',
-    playlist: '',
+    port: '',
     pattern: '',
-    duration: '',
     tags: []
 }
+
 let fileMatchPattern;
+let api;
+
+let clips = [], hidden = [];
 
 $configDirectory.val(config.directory)
-$configPlaylist.val(config.playlist)
+$configPort.val(config.port)
 $configPattern.val(config.pattern)
-$configDuration.val(config.duration)
 $configTags.val(config.tags.join(','))
 
 $("#title").on('click', () => {
@@ -37,9 +42,13 @@ $("#title").on('click', () => {
     window.location.reload()
 })
 
-$("#configuration-form").on('submit', (e) => {
-    e.preventDefault()
-    e.stopPropagation()
+$("#configuration-form").on('submit', submitConfiguration)
+
+function submitConfiguration(e) {
+    if (e) {
+        e.preventDefault()
+        e.stopPropagation()
+    }
 
     try {
         fileMatchPattern = new RegExp($configPattern.val())
@@ -50,18 +59,15 @@ $("#configuration-form").on('submit', (e) => {
     }
 
     config.directory = $configDirectory.val()
-    config.playlist = $configPlaylist.val()
+    config.port = $configPort.val()
     config.pattern = $configPattern.val()
-    config.duration = $configDuration.val()
     config.tags = $configTags.val().split(',').map(s => s.trim()).filter(s => s).slice(0, 5)
 
     localStorage.config = JSON.stringify(config)
 
-    $("#configuration-popup").addClass('hide')
-    startManager();
-})
+    startManager().then(() => $("#configuration-popup").addClass('hide'));
+}
 
-let clips = [], hidden = [];
 
 function fetchListing() {
     const clipNames = clips.map(clip => clip.name).concat(hidden)
@@ -181,25 +187,30 @@ function hideAllClips() {
     updateUI()
 }
 
-function enqueuePlaylist() {
-    const queue = clips
-        .filter(c => c.checked)
-        .map(c => `file ${c.name}\nduration ${config.duration}\n`)
-        .join('\n')
-
-    const playlist = 'ffconcat version 1.0\n\n' + queue
-    fs.writeFile(path.join(config.directory, config.playlist), playlist, (e) => {
-        if (e) {
-            console.error(e)
-            alert("An error occurred when writing to the file. Check the console for more info.")
-            return
-        }
-        $selectionStatus.text('Playlist updated successfully.')
-    })
+function showAllClips() {
+    if (!confirm('Are you sure you want to reveal all clips?'))
+        return
+    hidden = []
+    fetchListing()
 }
 
-function startManager() {
+function copyURL() {
+    const url = `http://localhost:${config.port}`
+    navigator.clipboard.writeText(url).then(() => $selectionStatus.text('Copied Viewer URL!'))
+}
+
+function enqueuePlaylist() {
+    const playlist = clips
+        .filter(c => c.checked)
+        .map(c => c.name)
+    api.enqueueClips(playlist)
+    $selectionStatus.text('Playlist updated successfully.')
+}
+
+async function startManager() {
     $hideAll.on('click', hideAllClips)
+    $showAll.on('click', showAllClips)
+    $copyURL.on('click', copyURL)
 
     $replayClipSelector
         .append($("<span class='tag'>").addClass(`tag-neutral`).text('All').on('click', () => {
@@ -224,9 +235,16 @@ function startManager() {
     })
     $enqueueSelection.on('click', () => enqueuePlaylist())
 
+    // Watch the target folder.
     chokidar
         .watch(config.directory.replace(/\\/g, '/'))
         .on('add', () => fetchListing())
+
+    // Start the viewer API
+    api = new API(config.port, name => path.join(config.directory, name))
+    await api.startServer()
+
+    // Do the initial setup.
     fetchListing()
     enqueuePlaylist()
 }

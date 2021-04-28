@@ -41,6 +41,7 @@ body {
     text-transform: uppercase;
     display: block;
 }
+
 .input input {
     display: block;
     width: 100%;
@@ -49,7 +50,9 @@ body {
     border-radius: 4px;
     border: 1px solid #bbb;
 }
+
 .btn {
+    white-space: nowrap;
     font: inherit;
     font-size: 14px;
     padding: 8px 16px;
@@ -60,17 +63,21 @@ body {
     cursor: pointer;
     color: black;
 }
-.btn-confirm {
+
+.btn-small {
+    font-size: 12px;
+    padding: 4px 8px;
+}
+
+.btn-confirm, .btn-warn {
     background: #505050;
     color: white;
 }
+
 .btn-confirm:hover {
     background: #348625;
 }
-.btn-warn {
-    background: #505050;
-    color: white;
-}
+
 .btn-warn:hover {
     background: rgb(182, 56, 56);
 
@@ -98,7 +105,8 @@ body {
 #replay-clips-container header {
     display: flex;
     justify-content: space-between;
-    padding: 16px;
+    align-items: center;
+    padding: 12px;
 }
 
 #replay-clips-container h1 {
@@ -123,6 +131,7 @@ body {
 .small-column {
     width: 1px;
 }
+
 .clip-tags {
     text-align: right;
 }
@@ -157,7 +166,7 @@ body {
 
 
 #replay-clips td {
-    padding: 6px 8px;
+    padding: 6px;
     height: 34px;
     box-sizing: border-box;
 }
@@ -176,7 +185,7 @@ body {
 }
 
 #replay-clips .clip-tags .tag {
-    margin-left: 8px;
+    margin-left: 4px;
     cursor: pointer;
 }
 
@@ -188,13 +197,14 @@ body {
     border-radius: 50px;
     background: var(--tag-color);
 }
+
 #replay-clips .tag.deselected {
     background: #555;
 }
+
 #replay-clips .tag.deselected:hover {
     background: #444;
 }
-
 
 #replay-clips .tag:not(.deselected) {
     box-shadow: 0 0 18px -1px var(--tag-color);
@@ -232,19 +242,27 @@ body {
 .tag-picker {
     margin-right: 4px;
 }
+
 .tag-picker option {
     padding: 8px;
 }
 
 
+#header-row-2 {
+    background: rgba(255,255,255,0.15);
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+}
+
 #replay-clips-selector {
     display: flex;
-    padding: 0 16px 16px;
     font-size: 14px;
     align-items: center;
 }
+
 #replay-clips-selector .tag {
-    margin-left: 10px;
+    margin-left: 6px;
     cursor: pointer;
 }
 
@@ -252,18 +270,15 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px 8px;
+    padding: 12px 12px;
 }
 
-#replay-clips-container footer .status {
-    padding-left: 8px;
-}
-#replay-clips-container footer .actions {
+#replay-clips-container footer .actions,
+#replay-clips-container header .actions {
     display: flex;
 }
 
-#replay-clips-container footer .actions > * {
-    margin: 0 8px;
+#replay-clips-container footer .actions > *,
+#replay-clips-container header .actions > * {
+    margin-left: 4px;
 }
-
-

@@ -5,30 +5,26 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>FFConcat Replay</title>
+    <title>preyneyv's Replay</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+    <script src="scripts/index.js" type="module"></script>
 </head>
 <body>
 <div id="configuration-popup">
     <div id="configuration-body">
-        <h1>FFConcat Replay</h1>
+        <h1>preyneyv's Replay</h1>
         <form id="configuration-form">
             <label class="input">
                 <span>Session Directory</span>
                 <input required type="text" placeholder="Z:\Recordings" id="configuration-directory">
             </label>
             <label class="input">
-                <span>FFConcat Playlist File</span>
-                <input required type="text" placeholder="playlist.txt" id="configuration-playlist">
+                <span>Client Port</span>
+                <input required type="number" min="1000" placeholder="3000" id="configuration-port">
             </label>
             <label class="input">
                 <span>Filter Pattern (regex)</span>
-                <input required type="text" placeholder="Replay*" id="configuration-pattern">
-            </label>
-            <label class="input">
-                <span>Clip Duration (seconds)</span>
-                <input required type="number" min="0" placeholder="10" id="configuration-duration">
+                <input required type="text" placeholder="Replay.*" id="configuration-pattern">
             </label>
             <label class="input">
                 <span>Tags (up to 5, comma-separated)</span>
@@ -40,11 +36,19 @@
 </div>
 <div id="replay-clips-container">
     <header>
-        <h1 id="title">FFConcat Replay Manager</h1>
-        <button id="hide-all" class="btn btn-warn">Hide All</button>
+        <h1 id="title">preyneyv's Replay Manager</h1>
+        <div class="actions">
+            <button id="show-all" class="btn btn-small btn-warn">Show All</button>
+            <button id="hide-all" class="btn btn-small btn-warn">Hide All</button>
+        </div>
     </header>
-    <div id="replay-clips-selector">
-        <span>Select:</span>
+    <div id="header-row-2">
+        <div id="replay-clips-selector">
+            <span>Select:</span>
+        </div>
+        <div>
+            <button id="copy-url" class="btn btn-small btn-confirm">Copy Viewer URL</button>
+        </div>
     </div>
     <div id="replay-clips-scroller">
         <table id="replay-clips">
