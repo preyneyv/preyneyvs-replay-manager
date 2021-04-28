@@ -196,7 +196,7 @@ function showAllClips() {
 
 function copyURL() {
     const url = `http://localhost:${config.port}`
-    navigator.clipboard.writeText(url).then(() => $selectionStatus.text('Copied Viewer URL!'))
+    navigator.clipboard.writeText(url).then(() => $selectionStatus.text('Copied Viewer URL to clipboard!'))
 }
 
 function enqueuePlaylist() {
