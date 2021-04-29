@@ -6,13 +6,19 @@ const videoA = document.querySelector("#video-a"),
 let current = videoA,
     standby = videoB
 
-let nextIdx = 0
+let nextIdx = -1
 
-const clipURL = idx => idx < clips.length ? `/clips/${clips[idx]}` : undefined
+const clipURL = () => {
+    nextIdx++
+    if (loop) {
+        nextIdx = nextIdx % clips.length
+    }
+    return nextIdx < clips.length ? `/clips/${clips[nextIdx]}` : undefined
+}
 
 function initializeFirstClip() {
-    current.src = clipURL(nextIdx++)
-    standby.src = clipURL(nextIdx++)
+    current.src = clipURL()
+    standby.src = clipURL()
     current.play()
     updateVolumes()
 }
@@ -50,7 +56,7 @@ function swapVideos(backoff) {
     
     setTimeout(() => {
         standby.classList.add('hide')
-        standby.src = clipURL(nextIdx++)
+        standby.src = clipURL()
     }, 1000)
 }
 

@@ -13,6 +13,7 @@ const $configDirectory = $("#configuration-directory"),
     $showAll = $("#show-all"),
     $copyURL = $("#copy-url"),
     $selectionStatus = $("#selection-status"),
+    $loopPlaylist = $("#loop-playlist"),
     $clearSelection = $("#clear-selection"),
     $enqueueSelection = $("#enqueue-selection"),
     $replayClipScroller = $("#replay-clips-scroller"),
@@ -190,6 +191,8 @@ function hideAllClips() {
 function showAllClips() {
     if (!confirm('Are you sure you want to reveal all clips?'))
         return
+    hidden.push(...clips.map(clip => clip.name))
+    updateUI()
     hidden = []
     fetchListing()
 }
@@ -203,7 +206,7 @@ function enqueuePlaylist() {
     const playlist = clips
         .filter(c => c.checked)
         .map(c => c.name)
-    api.enqueueClips(playlist)
+    api.enqueueClips(playlist, $loopPlaylist.prop('checked'))
     $selectionStatus.text('Playlist updated successfully.')
 }
 

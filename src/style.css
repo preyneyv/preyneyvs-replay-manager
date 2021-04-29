@@ -276,9 +276,15 @@ body {
 #replay-clips-container footer .actions,
 #replay-clips-container header .actions {
     display: flex;
+    align-items: center;
 }
 
 #replay-clips-container footer .actions > *,
 #replay-clips-container header .actions > * {
     margin-left: 4px;
+}
+
+#loop-playlist-button {
+    display: block;
+    margin-right: 8px;
 }

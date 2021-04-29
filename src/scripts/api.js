@@ -11,6 +11,7 @@ export class API {
         this.port = port
         this.app = express()
         this.clips = []
+        this.loop = false
 
         this.initializeApp()
     }
@@ -19,8 +20,9 @@ export class API {
         return new Promise(resolve => this.app.listen(this.port, resolve))
     }
 
-    enqueueClips(clips) {
+    enqueueClips(clips, loop) {
         this.clips = [...clips]
+        this.loop = loop
     }
 
     initializeApp() {
@@ -34,8 +36,10 @@ export class API {
     }
 
     getViewer(req, res) {
-        const clips = JSON.stringify(this.clips)
-        res.render('viewer', { clips })
+        const { clips, loop } = this
+        const data = JSON.stringify({ clips, loop })
+        
+        res.render('viewer', { data })
     }
 
     listClips(req, res) {
