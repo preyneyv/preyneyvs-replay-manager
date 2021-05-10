@@ -1,0 +1,11 @@
+{
+  "files.associations": {
+    "atomic": "cpp"
+  },
+  "discord.enabled": true,
+  "C_Cpp.default.includePath": [
+    "${default}",
+    "C:\\Users\\prana\\Projects\\preyneyvs-replay-manager\\node_modules\\node-addon-api",
+    "C:\\Users\\prana\\AppData\\Local\\node-gyp\\Cache\\14.1.0\\include\\node"
+  ]
+}
