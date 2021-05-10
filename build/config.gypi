@@ -73,8 +73,11 @@
     "v8_trace_maps": 0,
     "v8_use_siphash": 1,
     "want_separate_host_toolset": 0,
-    "nodedir": "C:\\Users\\prana\\AppData\\Local\\node-gyp\\Cache\\14.1.0",
+    "nodedir": "C:\\Users\\prana\\.electron-gyp\\12.0.7",
     "standalone_static_library": 1,
-    "msbuild_path": "X:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools\\MSBuild\\Current\\Bin\\MSBuild.exe"
+    "msbuild_path": "X:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools\\MSBuild\\Current\\Bin\\MSBuild.exe",
+    "runtime": "electron",
+    "target": "12.0.7",
+    "build_from_source": "true"
   }
 }
